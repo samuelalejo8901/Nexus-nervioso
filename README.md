@@ -143,18 +143,18 @@
 
         // Listas de información
         const lista_de_definicion = {
-            "ansiedad": "Es una respuesta natural del cuerpo ante situaciones de estrés o peligro. \nSe caracteriza por sentimientos de preocupación, nerviosismo o miedo, y \np puede manifestarse tanto a nivel físico como emocional."
+            "alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas. \nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad."
         };
 
         const lista_de_sintomas = {
-            "ansiedad": [
-                "Palpitaciones o aceleración del corazón",
-                "Sudoración excesiva",
-                "Tensión muscular",
-                "Fatiga o debilidad",
-                "Dificultad para respirar o sensación de ahogo",
-                "Mareos o aturdimiento",
-                "Náuseas o problemas gastrointestinales"
+            "alzheimer": [
+                "Pérdida de memoria",
+                "Confusión y desorientación",
+                "Dificultad para resolver problemas",
+                "Problemas con el lenguaje",
+                "Cambios de humor y personalidad",
+                "Pérdida de habilidades motoras y coordinación",
+                "Dificultad para tomar decisiones",
             ]
         };
 
@@ -215,7 +215,7 @@
 
                 case 'preguntando_ejemplo':
                     if (msg.body.toLowerCase() === 'sí') {
-                        msg.reply('Aquí tienes un ejemplo: María, de 28 años, siente ansiedad antes de las reuniones en su trabajo.');
+                        msg.reply('Aquí tienes un ejemplo: Marta, de 75 años, tiene Alzheimeer. A menudo se pierde y no reconoce a su familia. Su hija la cuida a diario, ayudándola con tareas básicas, mientras los momentos de lucidez de Marta se vuelven cada vez más raros.');
                         estadosUsuarios[usuarioId] = 'evaluando_nuevo_ejemplo';
                     } else if (msg.body.toLowerCase() === 'no') {
                         msg.reply('Entiendo, si necesitas más información, no dudes en preguntar. Aquí tienes un video que puede ayudarte: [video]');
@@ -230,7 +230,7 @@
 
                 case 'decidiendo_ejemplo':
                     if (msg.body.toLowerCase() === 'sí') {
-                        msg.reply('Aquí tienes otro ejemplo: Pedro, de 34 años, siente ansiedad al hablar en público.');
+                        msg.reply('Aquí tienes otro ejemplo: Pedro, de 34 años, siente alzheimer y se perdio en un lugar público porque no recuerda donde vive .');
                     } else if (msg.body.toLowerCase() === 'no') {
                         msg.reply('Entiendo, aquí tienes un enlace para más información: [enlace]');
                         estadosUsuarios[usuarioId] = 'fin';
