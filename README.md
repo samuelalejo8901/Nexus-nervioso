@@ -143,7 +143,8 @@
 
         // Listas de información
         const lista_de_definicion = {
-            "alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas. \nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad."
+            "Alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas. \nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad.",
+            "Parkinso": "
         };
 
         const lista_de_sintomas = {
