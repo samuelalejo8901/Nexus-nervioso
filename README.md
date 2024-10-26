@@ -162,19 +162,34 @@
             ]
 
         "Parkinson": [
-            "Sintomas motores:",
             "Temblor en reposo",
             "generalmente en las manos",
             "Rigidez muscular, limitando el rango de movimiento",
             "Lentitud en los movimientos",
             "Inestabilidad postural y problemas de equilibrio",
             "Alteraciones en la marcha, como arrastrar los pies",
+            "Trastornos del sueño (insomnio, pesadillas, etc.)",
+            "Depresión, ansiedad y apatía",
+            "Dificultades cognitivas, como problemas de memoria",
+            "Pérdida del sentido del olfato",
+            "Problemas digestivos, como el estreñimiento",
            ] 
+
+        "Epilepsia": [
+            "Convulsiones recurrentes con movimientos involuntarios",
+            "Pérdida del conocimiento o episodios de ausencia",
+            "Confusión temporal o desorientación después de una crisis",
+            "Espasmos musculares incontrolables";
+            "Sensaciones extrañas, como hormigueo o alucinaciones sensoriales",
+         ]
         };
 
         // Función para saludar al usuario
         function saludarUsuario(msg) {
-            msg.reply('Hola soy tu asistente virtual y voy a ayudarte a entender mejor las enfermedades del sistema nervioso. \nIntroduce el nombre de la enfermedad:');
+            msg.reply('Hola soy tu asistente virtual y voy a ayudarte a entender mejor las enfermedades del sistema nervioso. \nIntroduce el nombre de la enfermedad:
+            Alzheimer
+            Parkinson
+            Epilepsia');
         }
 
         // Función para manejar mensajes
@@ -246,7 +261,8 @@
                     if (msg.body.toLowerCase() === 'sí') {
                         msg.reply('Aquí tienes otro ejemplo: Pedro, de 34 años, siente alzheimer y se perdio en un lugar público porque no recuerda donde vive .');
                     } else if (msg.body.toLowerCase() === 'no') {
-                        msg.reply('Entiendo, aquí tienes un enlace para más información: [enlace]');
+                        msg.reply('Entiendo, aquí tienes un enlace para más información: 
+                        [https://www.scielo.cl/scielo.php?pid=S0717-92272003041200003&script=sci_arttext&tlng=pt]');
                         estadosUsuarios[usuarioId] = 'fin';
                     }
                     break;
