@@ -161,7 +161,7 @@
                 "Dificultad para tomar decisiones",
             ]
 
-            "Parkinson": [
+        "Parkinson": [
             "Sintomas motores:",
             "Temblor en reposo",
             "generalmente en las manos",
