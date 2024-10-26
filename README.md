@@ -144,11 +144,14 @@
         // Listas de información
         const lista_de_definicion = {
             "Alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas. \nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad.",
-            "Parkinso": "
+            
+            "Parkinso": "Es una enfermedad neurodegenerativa que afecta principalmente al sistema nervioso central y se caracteriza por la pérdida progresiva de las neuronas que producen dopamina, \nun neurotransmisor crucial para el control de los movimientos. Esta disminución en los niveles de dopamina provoca síntomas motores y no motores que empeoran con el tiempo.",
+
+            "Epilepsia": " Un trastorno neurológico que provoca convulsiones recurrentes debido a la actividad eléctrica anormal en el cerebro. La epilepsia puede afectar a personas de todas las edades y su intensidad varía, \npero puede ser controlada en muchos casos con tratamiento.
         };
 
         const lista_de_sintomas = {
-            "alzheimer": [
+            "Alzheimer": [
                 "Pérdida de memoria",
                 "Confusión y desorientación",
                 "Dificultad para resolver problemas",
@@ -157,6 +160,16 @@
                 "Pérdida de habilidades motoras y coordinación",
                 "Dificultad para tomar decisiones",
             ]
+
+            "Parkinson": [
+            "Sintomas motores:",
+            "Temblor en reposo",
+            "generalmente en las manos",
+            "Rigidez muscular, limitando el rango de movimiento",
+            "Lentitud en los movimientos",
+            "Inestabilidad postural y problemas de equilibrio",
+            "Alteraciones en la marcha, como arrastrar los pies",
+           ] 
         };
 
         // Función para saludar al usuario
