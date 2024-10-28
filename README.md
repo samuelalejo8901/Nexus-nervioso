@@ -13,7 +13,6 @@
             background: linear-gradient(135deg, #FFD1DC, #FFB6C1, #FFC0CB, #FF69B4);
             background-size: 200% 200%;
             animation: gradientShift 5s ease infinite;
-            position: relative;
         }
 
         @keyframes gradientShift {
@@ -24,7 +23,7 @@
 
         .relieve {
             width: 60%;
-            height: 300px;
+            height: 60vh;
             padding: 20px;
             background-color: #FFD1DC;
             border-radius: 20px;
@@ -36,51 +35,49 @@
             font-family: 'Arial', sans-serif;
             color: #333;
             font-size: 24px;
+            overflow-y: hidden;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
         .mensaje-container {
-            position: absolute;
-            max-height: 1000px;
-            width: 500px;
-            overflow-y: auto;
+            flex-grow: 1;
+            width: 100%;
             padding: 10px;
+            overflow-y: auto;
             text-align: left;
         }
 
-        .mensaje-usuario {
+        .mensaje-usuario, .mensaje-respuesta {
             padding: 10px;
-            background-color: #FFC0CB;
             border-radius: 10px;
             margin-bottom: 10px;
             display: inline-block;
             max-width: 80%;
-            text-align: right;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .mensaje-usuario {
+            background-color: #FFC0CB;
+            text-align: right;
             float: right;
             clear: both;
         }
 
         .mensaje-respuesta {
-            padding: 10px;
             background-color: #FF69B4;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            display: inline-block;
-            max-width: 80%;
             text-align: left;
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
             float: left;
             clear: both;
         }
 
         .input-container {
-            position: absolute;
-            bottom: 20px;
-            width: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
+            margin-top: 10px;
+            position: relative;
         }
 
         .input-container input[type="text"] {
@@ -118,11 +115,11 @@
         <div class="mensaje-container" id="mensajeContainer">
             <!-- Los mensajes enviados aparecerán aquí -->
         </div>
-    </div>
 
-    <div class="input-container">
-        <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje aquí...">
-        <button onclick="enviarMensaje()">Enviar</button>
+        <div class="input-container">
+            <input type="text" id="mensajeInput" placeholder="Escribe tu mensaje aquí...">
+            <button onclick="enviarMensaje()">Enviar</button>
+        </div>
     </div>
 
     <script>
@@ -159,68 +156,64 @@
             ]
         };
 
-        function saludarUsuario(msg) {
-            msg.reply("Hola, soy tu asistente virtual y voy a ayudarte a entender mejor las enfermedades del sistema nervioso.\nIntroduce el nombre de la enfermedad:\nAlzheimer\nParkinson\nEpilepsia");
+        function saludarUsuario() {
+            agregarMensaje("Hola, soy tu asistente virtual y voy a ayudarte a entender mejor las enfermedades del sistema nervioso.\nIntroduce el nombre de la enfermedad:\nAlzheimer\nParkinson\nEpilepsia", 'respuesta');
         }
 
         function manejarMensaje(msg) {
-            const usuarioId = msg.from;
-            const mensaje = msg.body.trim().toLowerCase();
+            const usuarioId = 'usuarioId';
+            const mensaje = msg.trim().toLowerCase();
 
             if (!estadosUsuarios[usuarioId]) {
                 estadosUsuarios[usuarioId] = 'inicio';
             }
 
-            evaluarRespuesta(msg, estadosUsuarios[usuarioId], usuarioId);
+            evaluarRespuesta(mensaje, estadosUsuarios[usuarioId], usuarioId);
         }
 
-        function evaluarRespuesta(msg, estado, usuarioId) {
-    // Convertimos el mensaje a minúsculas para comparar
-    const enfermedadConsultada = msg.body.toLowerCase().trim();
+        function evaluarRespuesta(mensaje, estado, usuarioId) {
+            switch (estado) {
+                case 'inicio':
+                    saludarUsuario();
+                    estadosUsuarios[usuarioId] = 'esperando_enfermedad';
+                    break;
 
-    switch (estado) {
-        case 'inicio':
-            saludarUsuario(msg);
-            estadosUsuarios[usuarioId] = 'esperando_enfermedad';
-            break;
+                case 'esperando_enfermedad':
+                    if (lista_de_definicion[mensaje]) {
+                        const definicion = lista_de_definicion[mensaje];
+                        const sintomas = lista_de_sintomas[mensaje].join(', ');
+                        agregarMensaje(`**Definición de ${mensaje.charAt(0).toUpperCase() + mensaje.slice(1)}:**\n${definicion}\n\n**Síntomas:**\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`, 'respuesta');
+                        estadosUsuarios[usuarioId] = 'evaluando_entendimiento';
+                    } else {
+                        agregarMensaje("Lo siento, no tengo información sobre esa enfermedad. Intenta con otra.", 'respuesta');
+                    }
+                    break;
 
-        case 'esperando_enfermedad':
-            // Verificamos que la enfermedad esté en la lista de definiciones
-            if (lista_de_definicion[enfermedadConsultada]) {
-                const definicion = lista_de_definicion[enfermedadConsultada];
-                const sintomas = lista_de_sintomas[enfermedadConsultada].join(', ');
-                msg.reply(`**Definición de ${enfermedadConsultada.charAt(0).toUpperCase() + enfermedadConsultada.slice(1)}:**\n${definicion}\n\n**Síntomas:**\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`);
-                estadosUsuarios[usuarioId] = 'evaluando_entendimiento';
-            } else {
-                msg.reply("Lo siento, no tengo información sobre esa enfermedad. Intenta con otra.");
+                case 'evaluando_entendimiento':
+                    if (mensaje === 'sí') {
+                        agregarMensaje('¡Genial! ¿Quieres un ejemplo? Responde "sí" o "no".', 'respuesta');
+                        estadosUsuarios[usuarioId] = 'evaluando_final';
+                    } else if (mensaje === 'no') {
+                        agregarMensaje('De acuerdo. Si tienes más preguntas, aquí estoy.', 'respuesta');
+                        estadosUsuarios[usuarioId] = 'fin';
+                    } else {
+                        agregarMensaje('Por favor, responde "sí" o "no".', 'respuesta');
+                    }
+                    break;
+
+                case 'evaluando_final':
+                    agregarMensaje("Gracias por tu tiempo. ¡Espero haberte ayudado!", 'respuesta');
+                    estadosUsuarios[usuarioId] = 'fin';
+                    break;
             }
-            break;
-
-        case 'evaluando_entendimiento':
-            if (msg.body.toLowerCase() === 'sí') {
-                msg.reply('¡Genial! ¿Quieres un ejemplo? Responde "sí" o "no".');
-                estadosUsuarios[usuarioId] = 'evaluando_final';
-            } else if (msg.body.toLowerCase() === 'no') {
-                msg.reply('De acuerdo. Si tienes más preguntas, aquí estoy.');
-                estadosUsuarios[usuarioId] = 'fin';
-            } else {
-                msg.reply('Por favor, responde "sí" o "no".');
-            }
-            break;
-
-        case 'evaluando_final':
-            msg.reply("Gracias por tu tiempo. ¡Espero haberte ayudado!");
-            estadosUsuarios[usuarioId] = 'fin';
-            break;
-    }
-
+        }
 
         function enviarMensaje() {
             const input = document.getElementById('mensajeInput');
             const mensaje = input.value.trim();
             if (mensaje) {
                 agregarMensaje(mensaje, 'usuario');
-                manejarMensaje({ body: mensaje, from: 'usuarioId', reply: (respuesta) => agregarMensaje(respuesta, 'respuesta') });
+                manejarMensaje(mensaje);
                 input.value = '';
             }
         }
