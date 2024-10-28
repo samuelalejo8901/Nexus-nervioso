@@ -172,40 +172,42 @@
         }
 
         function evaluarRespuesta(mensaje, estado, usuarioId) {
-            switch (estado) {
-                case 'inicio':
-                    saludarUsuario();
-                    estadosUsuarios[usuarioId] = 'esperando_enfermedad';
-                    break;
+    mensaje = mensaje.toLowerCase().trim(); // Convierte el mensaje a minúsculas para asegurar la comparación
 
-                case 'esperando_enfermedad':
-                    if (lista_de_definicion[mensaje]) {
-                        const definicion = lista_de_definicion[mensaje];
-                        const sintomas = lista_de_sintomas[mensaje].join(', ');
-                        agregarMensaje(`**Definición de ${mensaje.charAt(0).toUpperCase() + mensaje.slice(1)}:**\n${definicion}\n\n**Síntomas:**\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`, 'respuesta');
-                        estadosUsuarios[usuarioId] = 'evaluando_entendimiento';
-                    } else {
-                        agregarMensaje("Lo siento, no tengo información sobre esa enfermedad. Intenta con otra.", 'respuesta');
-                    }
-                    break;
+    switch (estado) {
+        case 'inicio':
+            saludarUsuario();
+            estadosUsuarios[usuarioId] = 'esperando_enfermedad';
+            break;
 
-                case 'evaluando_entendimiento':
-                    if (mensaje === 'sí') {
-                        agregarMensaje('¡Genial! ¿Quieres un ejemplo? Responde "sí" o "no".', 'respuesta');
-                        estadosUsuarios[usuarioId] = 'evaluando_final';
-                    } else if (mensaje === 'no') {
-                        agregarMensaje('De acuerdo. Si tienes más preguntas, aquí estoy.', 'respuesta');
-                        estadosUsuarios[usuarioId] = 'fin';
-                    } else {
-                        agregarMensaje('Por favor, responde "sí" o "no".', 'respuesta');
-                    }
-                    break;
-
-                case 'evaluando_final':
-                    agregarMensaje("Gracias por tu tiempo. ¡Espero haberte ayudado!", 'respuesta');
-                    estadosUsuarios[usuarioId] = 'fin';
-                    break;
+        case 'esperando_enfermedad':
+            if (lista_de_definicion[mensaje]) {
+                const definicion = lista_de_definicion[mensaje];
+                const sintomas = lista_de_sintomas[mensaje].join(', ');
+                agregarMensaje(`**Definición de ${mensaje.charAt(0).toUpperCase() + mensaje.slice(1)}:**\n${definicion}\n\n**Síntomas:**\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`, 'respuesta');
+                estadosUsuarios[usuarioId] = 'evaluando_entendimiento';
+            } else {
+                agregarMensaje("Lo siento, no tengo información sobre esa enfermedad. Intenta con otra.", 'respuesta');
             }
+            break;
+
+        case 'evaluando_entendimiento':
+            if (["si", "sí"].includes(mensaje)) {  // Verifica variaciones de "sí"
+                agregarMensaje('¡Genial! ¿Quieres un ejemplo? Responde "sí" o "no".', 'respuesta');
+                estadosUsuarios[usuarioId] = 'evaluando_final';
+            } else if (mensaje === 'no') {
+                agregarMensaje('De acuerdo. Si tienes más preguntas, aquí estoy.', 'respuesta');
+                estadosUsuarios[usuarioId] = 'fin';
+            } else {
+                agregarMensaje('Por favor, responde "sí" o "no".', 'respuesta');
+            }
+            break;
+
+        case 'evaluando_final':
+            agregarMensaje("Gracias por tu tiempo. ¡Espero haberte ayudado!", 'respuesta');
+            estadosUsuarios[usuarioId] = 'fin';
+            break;
+    }
         }
 
         function enviarMensaje() {
