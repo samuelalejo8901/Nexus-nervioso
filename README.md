@@ -129,20 +129,20 @@
         let estadosUsuarios = {};
 
         const lista_de_definicion = {
-            "Alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas.\nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad.",
-            "Parkinson": "Es una enfermedad neurodegenerativa que afecta principalmente al sistema nervioso central y se caracteriza por la pérdida progresiva de las neuronas que producen dopamina,\nun neurotransmisor crucial para el control de los movimientos.",
-            "Epilepsia": "Es un trastorno neurológico que provoca convulsiones recurrentes debido a la actividad eléctrica anormal en el cerebro."
+            "alzheimer": "Es un trastorno cerebral que destruye lentamente la memoria y la capacidad de pensar y, con el tiempo, la habilidad de llevar a cabo hasta las tareas más sencillas.\nLas personas con Alzheimer también experimentan cambios en la conducta y la personalidad.",
+            "parkinson": "Es una enfermedad neurodegenerativa que afecta principalmente al sistema nervioso central y se caracteriza por la pérdida progresiva de las neuronas que producen dopamina,\nun neurotransmisor crucial para el control de los movimientos.",
+            "epilepsia": "Es un trastorno neurológico que provoca convulsiones recurrentes debido a la actividad eléctrica anormal en el cerebro."
         };
 
         const lista_de_sintomas = {
-            "Alzheimer": [
+            "alzheimer": [
                 "Pérdida de memoria",
                 "Confusión y desorientación",
                 "Dificultad para resolver problemas",
                 "Cambios de humor y personalidad",
                 "Pérdida de habilidades motoras y coordinación"
             ],
-            "Parkinson": [
+            "parkinson": [
                 "Temblor en reposo",
                 "Rigidez muscular",
                 "Lentitud en los movimientos",
@@ -150,7 +150,7 @@
                 "Trastornos del sueño",
                 "Depresión, ansiedad y apatía"
             ],
-            "Epilepsia": [
+            "epilepsia": [
                 "Convulsiones recurrentes",
                 "Pérdida del conocimiento",
                 "Confusión temporal",
@@ -187,7 +187,7 @@
                     if (lista_de_definicion[enfermedadConsultada]) {
                         const definicion = lista_de_definicion[enfermedadConsultada];
                         const sintomas = lista_de_sintomas[enfermedadConsultada].join(', ');
-                        msg.reply(`**Definición de ${enfermedadConsultada}:**\n${definicion}\n\nSíntomas:\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`);
+                        msg.reply(`**Definición de ${enfermedadConsultada.charAt(0).toUpperCase() + enfermedadConsultada.slice(1)}:**\n${definicion}\n\n**Síntomas:**\n${sintomas}\n\n¿Entendiste? Responde "sí" o "no".`);
                         estadosUsuarios[usuarioId] = 'evaluando_entendimiento';
                     } else {
                         msg.reply("Lo siento, no tengo información sobre esa enfermedad. Intenta con otra.");
@@ -209,20 +209,18 @@
                 case 'preguntando_ejemplo':
                     if (msg.body.toLowerCase() === 'sí') {
                         msg.reply('Ejemplo: Marta, de 75 años, tiene Alzheimer. A menudo se pierde y no reconoce a su familia.');
-                        estadosUsuarios[usuarioId] = 'evaluando_nuevo_ejemplo';
-                    } else {
-                        msg.reply('Si necesitas más información, no dudes en preguntar.');
+                        estadosUsuarios[usuarioId] = 'evaluando_final';
+                    } else if (msg.body.toLowerCase() === 'no') {
+                        msg.reply('De acuerdo. Si tienes más preguntas, aquí estoy.');
                         estadosUsuarios[usuarioId] = 'fin';
+                    } else {
+                        msg.reply('Por favor, responde "sí" o "no".');
                     }
                     break;
 
-                case 'fin':
-                    msg.reply('Gracias por usar el asistente. Si necesitas más ayuda, no dudes en preguntar.');
-                    delete estadosUsuarios[usuarioId];
-                    break;
-
-                default:
-                    msg.reply('No entiendo tu respuesta, por favor intenta nuevamente.');
+                case 'evaluando_final':
+                    msg.reply("Gracias por tu tiempo. ¡Espero haberte ayudado!");
+                    estadosUsuarios[usuarioId] = 'fin';
                     break;
             }
         }
