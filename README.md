@@ -1,10 +1,117 @@
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página con Cuadro de Mensajes y Envío</title>
     <style>
-        /* Coloca aquí el CSS del fondo, cuadros de mensajes y otros estilos */
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #FFD1DC, #FFB6C1, #FFC0CB, #FF69B4);
+            background-size: 200% 200%;
+            animation: gradientShift 5s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .relieve {
+            width: 60%;
+            height: 300px;
+            padding: 20px;
+            background-color: #FFD1DC;
+            border-radius: 20px;
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                        -10px -10px 20px rgba(255, 255, 255, 0.6),
+                        inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                        inset -10px -10px 20px rgba(255, 255, 255, 0.6);
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+            font-size: 24px;
+            position: relative;
+        }
+
+        .mensaje-container {
+            position: absolute;
+            max-height: 1000px;
+            width: 500px;
+            overflow-y: auto;
+            padding: 10px;
+            text-align: left;
+        }
+
+        .mensaje-usuario {
+            padding: 10px;
+            background-color: #FFC0CB;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+            max-width: 80%;
+            text-align: right;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            float: right;
+            clear: both;
+        }
+
+        .mensaje-respuesta {
+            padding: 10px;
+            background-color: #FF69B4;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: inline-block;
+            max-width: 80%;
+            text-align: left;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            float: left;
+            clear: both;
+        }
+
+        .input-container {
+            position: absolute;
+            bottom: 20px;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .input-container input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.1),
+                        inset -5px -5px 10px rgba(255, 255, 255, 0.5);
+            outline: none;
+        }
+
+        .input-container button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            font-size: 18px;
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2),
+                        -5px -5px 10px rgba(255, 255, 255, 0.5);
+            transition: background-color 0.3s;
+        }
+
+        .input-container button:hover {
+            background-color: #FF1493;
+        }
     </style>
 </head>
 <body>
