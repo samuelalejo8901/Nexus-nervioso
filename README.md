@@ -22,24 +22,24 @@
         }
 
         .relieve {
-            width: 60%;
-            height: 60vh;
-            padding: 20px;
-            background-color: #FFD1DC;
-            border-radius: 20px;
-            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
-                        -10px -10px 20px rgba(255, 255, 255, 0.6),
-                        inset 10px 10px 20px rgba(0, 0, 0, 0.2),
-                        inset -10px -10px 20px rgba(255, 255, 255, 0.6);
-            text-align: center;
-            font-family: 'Arial', sans-serif;
-            color: #333;
-            font-size: 24px;
-            overflow-y: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    width: 60%;
+    height: 60vh;
+    padding: 20px;
+    background: linear-gradient(135deg, #a8e6a3, #8ecf81, #6bbf5d, #47a743);
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2),
+                -10px -10px 20px rgba(255, 255, 255, 0.6),
+                inset 10px 10px 20px rgba(0, 0, 0, 0.2),
+                inset -10px -10px 20px rgba(255, 255, 255, 0.6);
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    font-size: 24px;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    }
 
         .mensaje-container {
             flex-grow: 1;
